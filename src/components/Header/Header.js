@@ -1,14 +1,14 @@
 import './Header.sass';
 
 
-function Header(){
+function Header(props){
     //const
 
     return(
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="#">STRASS BOUTIQUE</a>
+                    <a className="navbar-brand" href="#" onClick={()=> props.setCurrentPage("shop")}>STRASS BOUTIQUE</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                     </button>
@@ -21,11 +21,11 @@ function Header(){
                         <a className="nav-link" href="#">Candidature</a>
                         </li>
                         <li className="nav-item">
-                        <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Contact</a>
+                        <a className="nav-link disabled" href="#" tabIndex={-1} aria-disabled="true">Contact</a>
                         </li>
                     </ul>
-                    <button><i className="fa-solid fa-bag-shopping"></i></button>
                     </div>
+                    <button onClick={()=> props.setCurrentPage("cart")}><i className="fa-solid fa-bag-shopping"></i></button>
                 </div>
             </nav>
         </div>

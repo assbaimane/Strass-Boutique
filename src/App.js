@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Header from './components/Header/Header'
 import Card from './components/Card/Card'
+import Cart from './components/Cart/Cart'
 import Tenue1 from './images/tenue-1.png'
 import Tenue2 from './images/tenue-2.png'
 import Tenue3 from './images/tenue-3.png'
 
-
-
 function App() {
+  const [currentPage, setCurrentPage] = useState("shop")
+  const tenues = [Tenue1,Tenue2,Tenue3]
+  const [shopBag, setShopBag] = useState([])  
   const [articles, setArticles] = useState([
     {
       nom: "Tailleur blue baby",
@@ -27,22 +29,60 @@ function App() {
     }
   ]);
 
+  let inBag = (i) => {
+    alert(articles[i].nom + " " + articles[i].prix + " " + 0);
+    setShopBag(shopBag => [...shopBag, {nom: articles[i].nom, nbPiece: 0, prix: articles[i].prix}]);
+  }
+
+  let acheter = (i) => {
+    let copyArticle = [...articles]
+    if (copyArticle[i].stock>3){
+      copyArticle[i].stock--
+      setArticles(copyArticle)
+      inBag(i)
+    }
+    else if(copyArticle[i].stock>0){
+      copyArticle[i].stock--
+      setArticles(copyArticle)
+      alert("Attention, fait vite, plus que quelques pièces !")
+      inBag(i)
+    }
+    else if(copyArticle[i].stock <= 0){
+      console.log("Attention, il ne reste plus d'articles")
+    }
+  }
 
   return (
     <div className="App">
-      <Header/>
-      <Card
-        // tenue = {Tenue1}
-        // nom = {}
-        // stock = {}
-        // prix = {}
+      <Header
+        setCurrentPage={setCurrentPage}
       />
-      <Card
-        // tenue = {Tenue2}
-      />
-      <Card
-        // tenue = {Tenue3}
-      />
+      {/* ---------- ESHOP PAGE ---------- */}
+      {(currentPage === "shop") &&
+          <div className='mt-5 row'>
+            {articles.map((e, i) => {
+              return (
+                  <Card
+                      key={i}
+                      tenue= {tenues[i]}
+                      nom={e.nom}
+                      prix={e.prix}
+                      stock={e.stock}
+                      setArticles={setArticles}
+                      acheter={() => acheter(i)}
+                  />
+              )}
+            )}
+          </div>
+      }
+      {/* ---------- CART PAGE ---------- */}
+      {(currentPage === "cart") &&
+          <div className='mt-5 row'>
+              <Cart
+                  shopBag={shopBag}
+              />
+          </div>
+      }
     </div>
   );
 }
