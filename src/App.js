@@ -8,6 +8,7 @@ import Tenue2 from './images/tenue-2.png'
 import Tenue3 from './images/tenue-3.png'
 
 function App() {
+  // --------------------------- DATA ------------------------
   const [currentPage, setCurrentPage] = useState("shop")
   const tenues = [Tenue1,Tenue2,Tenue3]
   const [shopBag, setShopBag] = useState([])  
@@ -29,9 +30,10 @@ function App() {
     }
   ]);
 
+  // --------------------------- FUNCTIONS ------------------------
   let inBag = (i) => {
     alert(articles[i].nom + " " + articles[i].prix + " " + 0);
-    setShopBag(shopBag => [...shopBag, {nom: articles[i].nom, nbPiece: 0, prix: articles[i].prix}]);
+    setShopBag(shopBag => [...shopBag, {id: i, nom: articles[i].nom, nbPiece: 0, prix: articles[i].prix}]);
   }
 
   let acheter = (i) => {
@@ -44,7 +46,6 @@ function App() {
     else if(copyArticle[i].stock>0){
       copyArticle[i].stock--
       setArticles(copyArticle)
-      alert("Attention, fait vite, plus que quelques pièces !")
       inBag(i)
     }
     else if(copyArticle[i].stock <= 0){
@@ -52,6 +53,12 @@ function App() {
     }
   }
 
+  let fromBagToStock = (i) =>{
+    console.log("maintenant go essayer de remettre en stock")
+  }
+
+
+  // --------------------------- DISPLAY ------------------------
   return (
     <div className="App">
       <Header
@@ -79,7 +86,9 @@ function App() {
       {(currentPage === "cart") &&
           <div className='mt-5 row'>
               <Cart
-                  shopBag={shopBag}
+                shopBag={shopBag}
+                setShopBag={setShopBag}
+                fromBagToStock={fromBagToStock()}
               />
           </div>
       }
