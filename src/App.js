@@ -49,12 +49,15 @@ function App() {
       inBag(i)
     }
     else if(copyArticle[i].stock <= 0){
-      console.log("Attention, il ne reste plus d'articles")
+      console.log("Attention, il ne reste plus d'articles");
     }
   }
 
   let fromBagToStock = (i) =>{
-    console.log("maintenant go essayer de remettre en stock")
+    console.log("on va restooock")
+    let updateStock = [...articles];
+    updateStock[i.id].stock++;
+    setArticles(updateStock);
   }
 
 
@@ -88,7 +91,7 @@ function App() {
               <Cart
                 shopBag={shopBag}
                 setShopBag={setShopBag}
-                fromBagToStock={fromBagToStock()}
+                fromBagToStock={fromBagToStock}
               />
           </div>
       }

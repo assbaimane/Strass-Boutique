@@ -5,13 +5,13 @@ import {useEffect} from 'react';
 function Cart(props){
     
     // --------------------------- FUNCTIONS ------------------------
-    let deleteItem = (e,i) =>{
+    let deleteItem = (i) =>{
         alert("tu essaye de supprimer quelque chose")
         let copyBag = [...props.shopBag];
-        copyBag.splice(i, i+1);
+        copyBag.splice(i, 1);
         console.log(copyBag);
-        props.setShopBag(copyBag)
-        {props.fromBagToStock(e,i)}
+        props.setShopBag(copyBag);
+        props.fromBagToStock(i);
     }
 
 
